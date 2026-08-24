@@ -20,7 +20,7 @@ LechFolio is distributed under the terms of the GNU GPL
 /* Theme shell
 --------------------------------------------- */
 :root {
-  --lechfolio-accent: var(--coshlt-primary-color, #a60900);
+  --lechfolio-accent: var(--coshlt-accent, #a50800);
   --lechfolio-border: #e5e7eb;
   --lechfolio-text: #1f2933;
   --lechfolio-muted: #64748b;
