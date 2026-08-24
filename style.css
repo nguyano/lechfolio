@@ -258,7 +258,7 @@ display: flex;
 }
 
 .lechfolio-menu-list li a:hover {
-	color: var(--lechfolio-accent);
+	color: var(--coshlt-accent);
 }
 
 .lechfolio-contact-btn{
@@ -443,7 +443,7 @@ body,
 /* Active item */
 .lechfolio-menu-link.active {
   font-weight: 700;
-  color: var(--lechfolio-accent);
+  color: var(--coshlt-accent);
 }
 
 /* Dropdown */
