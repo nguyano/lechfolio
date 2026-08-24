@@ -20,7 +20,7 @@ LechFolio is distributed under the terms of the GNU GPL
 /* Theme shell
 --------------------------------------------- */
 :root {
-  --lechfolio-accent: var(--coshlt-primary, var(--coshlt-primary-color, #a60900));
+  --lechfolio-accent: var(--coshlt-primary-color, #a60900);
   --lechfolio-border: #e5e7eb;
   --lechfolio-text: #1f2933;
   --lechfolio-muted: #64748b;
@@ -258,7 +258,7 @@ display: flex;
 }
 
 .lechfolio-menu-list li a:hover {
-	color: var(--coshlt-accent);
+	color: var(--lechfolio-accent);
 }
 
 .lechfolio-contact-btn{
@@ -443,7 +443,7 @@ body,
 /* Active item */
 .lechfolio-menu-link.active {
   font-weight: 700;
-  color: var(--coshlt-accent);
+  color: var(--lechfolio-accent);
 }
 
 /* Dropdown */
