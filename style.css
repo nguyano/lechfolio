@@ -477,14 +477,10 @@ body,
   border-radius: 8px;
 }
 
-/* Keep the account menu visible from both JS state and keyboard/click focus. */
+/* Keep the account menu visible from the Coshelters-owned dropdown state. */
 .lechfolio-dropdown.open .lechfolio-dropdown-menu,
-.lechfolio-dropdown.is-open .lechfolio-dropdown-menu,
-.lechfolio-dropdown:focus-within .lechfolio-dropdown-menu,
-.coshlt-dropdown.open > .lechfolio-dropdown-menu,
-.coshlt-dropdown.is-open > .lechfolio-dropdown-menu,
-.coshlt-dropdown:focus-within > .lechfolio-dropdown-menu {
-  display: block !important;
+.lechfolio-dropdown.is-open .lechfolio-dropdown-menu {
+  display: block;
   visibility: visible;
   opacity: 1;
   pointer-events: auto;

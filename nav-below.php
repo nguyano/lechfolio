@@ -1,5 +1,8 @@
-<?php $args = array(
-'prev_text' => sprintf( esc_html__( '%s older', 'lechfolio' ), '<span class="meta-nav">&larr;</span>' ),
-'next_text' => sprintf( esc_html__( 'newer %s', 'lechfolio' ), '<span class="meta-nav">&rarr;</span>' )
-);
-the_posts_navigation( $args );
+<?php
+/**
+ * Backward-compatible wrapper for archive pagination.
+ *
+ * @package LechFolio
+ */
+
+get_template_part( 'template-parts/navigation/posts' );

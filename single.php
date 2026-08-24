@@ -1,9 +1,25 @@
-<?php get_header(); ?>
-<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-<?php get_template_part( 'entry' ); ?>
-<?php if ( comments_open() && !post_password_required() ) { comments_template( '', true ); } ?>
-<?php endwhile; endif; ?>
+<?php
+/**
+ * Single post template.
+ *
+ * @package LechFolio
+ */
+
+get_header();
+
+if ( have_posts() ) :
+	while ( have_posts() ) :
+		the_post();
+		get_template_part( 'template-parts/content/entry' );
+
+		if ( comments_open() && ! post_password_required() ) {
+			comments_template( '', true );
+		}
+	endwhile;
+endif;
+?>
 <footer class="footer">
-<?php get_template_part( 'nav', 'below-single' ); ?>
+	<?php get_template_part( 'template-parts/navigation/post' ); ?>
 </footer>
-<?php get_footer(); ?>
+<?php
+get_footer();

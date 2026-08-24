@@ -1,12 +1,26 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Author archive template.
+ *
+ * @package LechFolio
+ */
+
+get_header();
+the_post();
+?>
 <header class="header">
-<?php the_post(); ?>
-<h1 class="entry-title author" itemprop="name"><?php the_author_link(); ?></h1>
-<div class="archive-meta" itemprop="description"><?php if ( '' != get_the_author_meta( 'user_description' ) ) { echo esc_html( get_the_author_meta( 'user_description' ) ); } ?></div>
-<?php rewind_posts(); ?>
+	<h1 class="entry-title author" itemprop="name"><?php the_author_link(); ?></h1>
+	<div class="archive-meta" itemprop="description">
+		<?php echo esc_html( get_the_author_meta( 'user_description' ) ); ?>
+	</div>
 </header>
-<?php while ( have_posts() ) : the_post(); ?>
-<?php get_template_part( 'entry' ); ?>
-<?php endwhile; ?>
-<?php get_template_part( 'nav', 'below' ); ?>
-<?php get_footer(); ?>
+<?php
+rewind_posts();
+
+while ( have_posts() ) :
+	the_post();
+	get_template_part( 'template-parts/content/entry' );
+endwhile;
+
+get_template_part( 'template-parts/navigation/posts' );
+get_footer();
