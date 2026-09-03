@@ -15,6 +15,7 @@
 			<a href="https://ngunyiyannick.com" target="_blank" rel="noopener noreferrer">&nbsp;<?php esc_html_e( 'Ngunyi Yannick L.', 'lechfolio' ); ?></a>
 			<span class="lechfolio-footer-links">
 				<a href="<?php echo esc_url( home_url( '/about' ) ); ?>"><?php esc_html_e( 'About', 'lechfolio' ); ?></a> /
+				<a href="<?php echo esc_url( home_url( '/faqs' ) ); ?>"><?php esc_html_e( 'FAQs', 'lechfolio' ); ?></a> /
 				<a href="<?php echo esc_url( home_url( '/contact-us' ) ); ?>"><?php esc_html_e( 'Contact', 'lechfolio' ); ?></a>
 			</span>
 		</p>

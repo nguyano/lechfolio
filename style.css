@@ -261,7 +261,9 @@ display: flex;
 	color: var(--lechfolio-accent);
 }
 
-.lechfolio-contact-btn{
+/* Header shortcut buttons
+--------------------------------------------- */
+.lechfolio-contact-btn {
 	border: solid 1px #808c8d;
 	border-radius: 30px;
 	padding: 5px 15px !important;
@@ -270,10 +272,12 @@ display: flex;
 
 a.lechfolio-home-btn,
 a.lechfolio-about-btn,
+a.lechfolio-faqs-btn,
 a.lechfolio-contact-btn,
 .lechfolio-home-btn > a,
 .lechfolio-about-btn > a,
-.lechfolio-contact-btn > a {
+.lechfolio-contact-btn > a,
+.lechfolio-faqs-btn > a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -281,9 +285,11 @@ a.lechfolio-contact-btn,
 
 a.lechfolio-home-btn::before,
 a.lechfolio-about-btn::before,
+a.lechfolio-faqs-btn::before,
 a.lechfolio-contact-btn::before,
 .lechfolio-home-btn > a::before,
 .lechfolio-about-btn > a::before,
+.lechfolio-faqs-btn > a::before,
 .lechfolio-contact-btn > a::before {
   display: inline-block;
   font-family: "Font Awesome 6 Free";
@@ -303,6 +309,11 @@ a.lechfolio-home-btn::before,
 a.lechfolio-about-btn::before,
 .lechfolio-about-btn > a::before {
   content: "\f05a";
+}
+
+a.lechfolio-faqs-btn::before,
+.lechfolio-faqs-btn > a::before {
+  content: "\f059";
 }
 
 a.lechfolio-contact-btn::before,
@@ -336,6 +347,13 @@ a.lechfolio-contact-btn::before,
   font-weight: 700;
   color: var(--lechfolio-accent);
   border-bottom: 2px solid var(--lechfolio-accent);
+}
+
+.lechfolio-menu-list li.current-menu-item a.lechfolio-contact-btn,
+.lechfolio-menu-list li.current_page_item a.lechfolio-contact-btn,
+.lechfolio-menu-list li.lechfolio-contact-btn.current-menu-item > a,
+.lechfolio-menu-list li.lechfolio-contact-btn.current_page_item > a {
+  border-bottom: 0;
 }
 
 .lechfolio-menu {
@@ -424,8 +442,12 @@ body,
   cursor: pointer;
 }
 
-.lechfolio-menu-list .menu-item{
+.lechfolio-menu-list .menu-item {
 	padding: 0 1rem;
+}
+
+.lechfolio-menu-list .lechfolio-contact-btn {
+	padding: 5px 15px !important;
 }
 
 .lechfolio-menu-link:hover,
@@ -655,6 +677,151 @@ body.admin-bar #wrapper {
   margin-left: 1rem;
 }
 
+/* ShelterConnect FAQ page
+--------------------------------------------- */
+.sc-faq-page {
+  --sc-faq-accent: var(--lechfolio-accent, #a50800);
+  --sc-faq-border: #e2e8f0;
+  --sc-faq-ink: #172033;
+  --sc-faq-muted: #5f6f85;
+  --sc-faq-panel: #ffffff;
+  color: var(--sc-faq-ink);
+  margin: 0 auto;
+  max-width: 980px;
+  padding: clamp(2rem, 5vw, 4.5rem) 1rem;
+}
+
+.sc-faq-hero {
+  border-bottom: 1px solid var(--sc-faq-border);
+  margin-bottom: 1.5rem;
+  padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.sc-faq-hero h1 {
+  color: var(--sc-faq-accent);
+  font-size: clamp(2rem, 3rem, 3rem);
+  line-height: 1.08;
+  margin: 0 auto 1rem;
+  max-width: 860px;
+}
+
+.sc-faq-hero p {
+  color: var(--sc-faq-muted);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 760px;
+}
+
+.sc-faq-jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.sc-faq-jump-links a {
+  background: #ffffff;
+  border: 1px solid var(--sc-faq-border);
+  border-radius: 999px;
+  color: var(--sc-faq-ink);
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0.7rem 1rem;
+  text-decoration: none;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.sc-faq-jump-links a:hover,
+.sc-faq-jump-links a:focus {
+  border-color: var(--sc-faq-accent);
+  color: var(--sc-faq-accent);
+  transform: translateY(-1px);
+}
+
+.sc-faq-section {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.sc-faq-section h2 {
+  background: #2a3c48bd;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  padding: 0.95rem 1.1rem;
+}
+
+.sc-faq-panel {
+  background: var(--sc-faq-panel);
+  border: 1px solid var(--sc-faq-border);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+  margin: 0 0 0.75rem;
+  overflow: hidden;
+}
+
+.sc-faq-panel summary {
+  align-items: center;
+  color: var(--sc-faq-ink);
+  cursor: pointer;
+  display: flex;
+  font-size: 1.05rem;
+  font-weight: 800;
+  gap: 1rem;
+  justify-content: space-between;
+  line-height: 1.35;
+  list-style: none;
+  min-height: 3.75rem;
+  padding: 1rem 1.1rem;
+}
+
+.sc-faq-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.sc-faq-panel summary::after {
+  border: solid var(--sc-faq-accent);
+  border-width: 0 2px 2px 0;
+  content: "";
+  flex: 0 0 0.65rem;
+  height: 0.65rem;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+  width: 0.65rem;
+}
+
+.sc-faq-panel[open] summary {
+  border-bottom: 1px solid var(--sc-faq-border);
+}
+
+.sc-faq-panel[open] summary::after {
+  transform: rotate(-135deg);
+}
+
+.sc-faq-panel p,
+.sc-faq-panel ol {
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 1rem 1.1rem;
+}
+
+.sc-faq-panel ol {
+  padding-left: 1.35rem;
+}
+
+.sc-faq-panel li {
+  margin-bottom: 0.55rem;
+  padding-left: 0.2rem;
+}
+
+.sc-faq-panel a {
+  font-weight: 700;
+}
+
 
 @media (max-width: 991px) {
   .lechfolio-navbar-menu {
@@ -700,12 +867,12 @@ body.admin-bar #wrapper {
       margin-right: 0.75rem;
     }
 	
-	.lechfolio-add-shelter-btn, 
-	.lechfolio-contact-btn{
+	.lechfolio-add-shelter-btn,
+	.lechfolio-contact-btn {
 		margin-top: 0;
 	}
 	
-	.lechfolio-contact-btn{
+	.lechfolio-contact-btn {
 		border: none;
 	}
 	
@@ -744,5 +911,28 @@ body.admin-bar #wrapper {
     display: flex;
     justify-content: center;
     margin: 0.5rem 0 0;
+  }
+
+  .sc-faq-page {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .sc-faq-hero h1 {
+    font-size: 2rem;
+  }
+
+  .sc-faq-jump-links {
+    justify-content: flex-start;
+  }
+
+  .sc-faq-jump-links a {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .sc-faq-panel summary {
+    align-items: flex-start;
+    font-size: 1rem;
   }
 }
