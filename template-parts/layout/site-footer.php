@@ -1,6 +1,6 @@
 <?php
 /**
- * Site footer markup.
+ * Site footer with grouped copyright, developer credit, and navigation rows.
  *
  * @package LechFolio
  */
@@ -8,11 +8,16 @@
 <footer id="footer" role="contentinfo" class="lechfolio-footer">
 	<div class="lechfolio-footer-inner">
 		<p class="lechfolio-footer-copy">
-			<span class="lechfolio-coshlt-icon"><?php echo lechfolio_coshlt_icon( 20 ); ?></span>
-			&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?>
-			<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
-			<?php esc_html_e( ' | All rights reserved | Developed by ', 'lechfolio' ); ?>
-			<a href="https://ngunyiyannick.com" target="_blank" rel="noopener noreferrer">&nbsp;<?php esc_html_e( 'Ngunyi Yannick L.', 'lechfolio' ); ?></a>
+			<span class="lechfolio-footer-copyright">
+				<span class="lechfolio-coshlt-icon"><?php echo lechfolio_coshlt_icon( 20 ); ?></span>
+				&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?>
+				<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
+				<?php esc_html_e( ' | All rights reserved |', 'lechfolio' ); ?>
+			</span>
+			<span class="lechfolio-footer-credit">
+				<?php esc_html_e( 'Developed by', 'lechfolio' ); ?>
+				<a href="https://ngunyiyannick.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ngunyi Yannick L.', 'lechfolio' ); ?></a>
+			</span>
 			<span class="lechfolio-footer-links">
 				<a href="<?php echo esc_url( home_url( '/about' ) ); ?>"><?php esc_html_e( 'About', 'lechfolio' ); ?></a> /
 				<a href="<?php echo esc_url( home_url( '/faqs' ) ); ?>"><?php esc_html_e( 'FAQs', 'lechfolio' ); ?></a> /
