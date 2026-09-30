@@ -28,3 +28,6 @@ build/
 # Local environment files.
 .env
 .env.*
+
+# Keep deployment tooling local; the server webhook is installed separately.
+/.github/
