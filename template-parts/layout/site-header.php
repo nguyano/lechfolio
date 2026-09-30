@@ -1,6 +1,6 @@
 <?php
 /**
- * Site header and primary navigation shell.
+ * Site header with an accessible mobile navigation toggle.
  *
  * @package LechFolio
  */
@@ -22,17 +22,17 @@ $logo_class = is_user_logged_in() && lechfolio_is_frontend_request() ? 'lechfoli
 		</a>
 
 		<div class="lechfolio-header-actions">
-			<nav id="lechfolio-main-menu" class="lechfolio-menu">
+			<nav id="lechfolio-main-menu" class="lechfolio-menu" aria-label="<?php esc_attr_e( 'Main menu', 'lechfolio' ); ?>" data-submenu-label="<?php esc_attr_e( 'Submenu for', 'lechfolio' ); ?>">
 				<?php lechfolio_primary_menu(); ?>
 			</nav>
 
 			<?php do_action( 'coshlt_theme_header_controls' ); ?>
 
-			<div class="lechfolio-menu-toggle" id="lechfolio-menu-toggle">
+			<button type="button" class="lechfolio-menu-toggle" id="lechfolio-menu-toggle" aria-controls="lechfolio-main-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle main menu', 'lechfolio' ); ?>">
 				<span></span>
 				<span></span>
 				<span></span>
-			</div>
+			</button>
 		</div>
 	</div>
 </header>

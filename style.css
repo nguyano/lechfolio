@@ -16,7 +16,7 @@ Text Domain: lechfolio
 LechFolio WordPress Theme 2025
 LechFolio is distributed under the terms of the GNU GPL
 
-Theme presentation, including responsive footer content alignment.
+Theme presentation, including accessible dropdown navigation and responsive layouts.
 */
 
 /* Theme shell
@@ -344,8 +344,8 @@ a.lechfolio-contact-btn::before,
   background-color: #e4e4e4;
 }
 
-.lechfolio-menu-list li.current-menu-item a,
-.lechfolio-menu-list li.current_page_item a {
+.lechfolio-menu-list li.current-menu-item > a,
+.lechfolio-menu-list li.current_page_item > a {
   font-weight: 700;
   color: var(--lechfolio-accent);
   border-bottom: 2px solid var(--lechfolio-accent);
@@ -1075,5 +1075,207 @@ body.admin-bar #wrapper {
   .sc-faq-panel summary {
     align-items: flex-start;
     font-size: 1rem;
+  }
+}
+
+/* Primary navigation: disclosure panels and nested mobile rows.
+--------------------------------------------- */
+.lechfolio-menu > .lechfolio-menu-list {
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lechfolio-menu .lechfolio-menu-list .menu-item {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.lechfolio-menu .menu-item > a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.65rem 0.85rem;
+  line-height: 1.4;
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+
+.lechfolio-menu .menu-item > a:hover,
+.lechfolio-menu .current-menu-ancestor > a {
+  background: #f7f1f0;
+  color: var(--lechfolio-accent);
+}
+
+.lechfolio-menu .lechfolio-has-submenu > a {
+  padding-right: 3rem;
+}
+
+.lechfolio-menu .sub-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 260px;
+  max-width: calc(100vw - 2rem);
+  margin: 0;
+  padding: 0.5rem;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--lechfolio-border);
+  border-top: 3px solid var(--lechfolio-accent);
+  border-radius: 8px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.14);
+  z-index: 10002;
+}
+
+/* Deeper levels expand within the panel to stay inside the viewport. */
+.lechfolio-menu .sub-menu .sub-menu {
+  position: static;
+  width: auto;
+  margin: 0.25rem 0 0.25rem 0.75rem;
+  padding: 0 0 0 0.5rem;
+  border: 0;
+  border-left: 2px solid var(--lechfolio-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.lechfolio-menu .sub-menu {
+  display: none;
+}
+
+.lechfolio-menu-enhanced .lechfolio-submenu-open > .sub-menu,
+.lechfolio-menu:not(.lechfolio-menu-enhanced) li:hover > .sub-menu,
+.lechfolio-menu:not(.lechfolio-menu-enhanced) li:focus-within > .sub-menu {
+  display: block;
+}
+
+.lechfolio-submenu-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lechfolio-text);
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.lechfolio-submenu-toggle::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.lechfolio-submenu-toggle[aria-expanded="true"]::after {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.lechfolio-submenu-toggle:hover,
+.lechfolio-submenu-toggle[aria-expanded="true"] {
+  background: #f7f1f0;
+  color: var(--lechfolio-accent);
+}
+
+.lechfolio-menu a:focus-visible,
+.lechfolio-submenu-toggle:focus-visible,
+.lechfolio-menu-toggle:focus-visible {
+  outline: 2px solid var(--lechfolio-accent);
+  outline-offset: 2px;
+}
+
+.lechfolio-menu .lechfolio-menu-list .lechfolio-contact-btn {
+  margin-top: 0;
+  padding: 0 !important;
+  border-radius: 30px;
+}
+
+.lechfolio-menu li.lechfolio-contact-btn > a,
+.lechfolio-menu a.lechfolio-contact-btn {
+  padding: 0.65rem 1rem !important;
+  border-radius: 30px;
+}
+
+.lechfolio-menu li.lechfolio-contact-btn.lechfolio-has-submenu > a {
+  padding-right: 3rem !important;
+}
+
+.lechfolio-menu-toggle {
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 6px;
+  border: 1px solid var(--lechfolio-border);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.lechfolio-menu-toggle span {
+  margin: 3px 0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+  .lechfolio-nav-container {
+    gap: 0.75rem;
+  }
+
+  .lechfolio-menu-toggle {
+    display: flex;
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .lechfolio-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    max-height: 70vh;
+    max-height: 70dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid var(--lechfolio-border);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+  }
+
+  .lechfolio-menu.lechfolio-active {
+    display: block;
+  }
+
+  .lechfolio-menu > .lechfolio-menu-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .lechfolio-menu .sub-menu,
+  .lechfolio-menu .lechfolio-dropdown-menu {
+    position: static;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    margin: 0.25rem 0 0.5rem 0.75rem;
+    padding: 0 0 0 0.5rem;
+    border: 0;
+    border-left: 2px solid var(--lechfolio-border);
+    border-radius: 0;
+    box-shadow: none;
   }
 }
