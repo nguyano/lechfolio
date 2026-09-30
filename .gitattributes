@@ -1,0 +1,4 @@
+# Keep release automation and Git configuration out of the installable theme ZIP.
+.github export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
