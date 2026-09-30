@@ -31,3 +31,6 @@ build/
 
 # Keep deployment tooling local; the server webhook is installed separately.
 /.github/
+
+# Keep project documentation local.
+/docs/
