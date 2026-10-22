@@ -1,10 +1,11 @@
 === LechFolio ===
 
+Theme requirements, installation, and deployment verification reference.
+
 Contributors: Ngunyi yannick
 Theme link: https://dev.sheltersconnectcolorado.com
 Tags: accessibility-ready, one-column, two-columns, custom-menu, featured-images, microformats, sticky-post, threaded-comments, translation-ready
-Requires at least: 5.2
-Tested up to: 6.5
+Requires at least: 6.6
 Stable tag: trunk
 License: GNU General Public License v3 or Later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -29,7 +30,7 @@ The theme should be transferred, deployed, configured, and maintained as part of
 
 == Technical Requirements ==
 
-* WordPress 5.2 or later.
+* WordPress 6.6 or later (theme.json version 3), with PHP 8.0 or later.
 * The custom Coshelters plugin active for platform application pages and authenticated shelter workflows.
 * HTTPS for production traffic.
 * A writable WordPress uploads directory for theme and platform media.

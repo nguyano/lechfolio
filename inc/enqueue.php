@@ -8,6 +8,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Returns a cache-busting version for a theme-relative asset.
  *

@@ -5,6 +5,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 get_header();
 ?>
 <article id="post-0" class="post not-found">

@@ -5,6 +5,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Sets a concise document title separator.
  *

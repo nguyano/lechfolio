@@ -5,6 +5,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $nav_items        = isset( $args['nav_items'] ) && is_array( $args['nav_items'] ) ? $args['nav_items'] : array();
 $current_endpoint = isset( $args['current_endpoint'] ) ? sanitize_key( $args['current_endpoint'] ) : '';
 $current_path     = isset( $args['current_path'] ) ? trim( (string) $args['current_path'], '/' ) : '';

@@ -8,6 +8,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! function_exists( 'lechfolio_loged_in_menu' ) ) {
 	/**
 	 * Renders the LechFolio logged-in shelter navigation menu.

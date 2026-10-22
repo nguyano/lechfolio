@@ -8,6 +8,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 add_action( 'after_setup_theme', 'lechfolio_setup' );
 add_action( 'admin_init', 'lechfolio_notice_dismissed' );
 add_action( 'wp_enqueue_scripts', 'lechfolio_enqueue', 30 );
@@ -25,6 +30,6 @@ add_filter( 'the_content_more_link', 'lechfolio_read_more_link' );
 add_filter( 'excerpt_more', 'lechfolio_excerpt_read_more_link' );
 add_filter( 'big_image_size_threshold', '__return_false' );
 add_filter( 'intermediate_image_sizes_advanced', 'lechfolio_image_insert_override' );
-add_filter( 'get_comments_number', 'lechfolio_comment_count', 0 );
+add_filter( 'get_comments_number', 'lechfolio_comment_count', 0, 2 );
 add_filter( 'theme_action_links_' . get_template(), 'lechfolio_theme_action_links' );
 add_filter( 'theme_action_links_' . get_stylesheet(), 'lechfolio_theme_action_links' );

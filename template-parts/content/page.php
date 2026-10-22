@@ -1,9 +1,14 @@
 <?php
 /**
- * Standard page content card.
+ * Standard page content card; protected pages do not expose featured media.
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'lechfolio-page-card' ); ?>>
 	<header class="lechfolio-page-header">
@@ -12,7 +17,7 @@
 	</header>
 
 	<div class="lechfolio-page-body entry-content" itemprop="mainContentOfPage">
-		<?php if ( has_post_thumbnail() ) : ?>
+		<?php if ( ! post_password_required() && has_post_thumbnail() ) : ?>
 			<div class="lechfolio-featured-image">
 				<?php the_post_thumbnail( 'full', array( 'class' => 'lechfolio-responsive-image', 'itemprop' => 'image' ) ); ?>
 			</div>

@@ -4,6 +4,11 @@
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <footer class="entry-footer">
 	<span class="cat-links"><?php esc_html_e( 'Categories: ', 'lechfolio' ); ?><?php the_category( ', ' ); ?></span>

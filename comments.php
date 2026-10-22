@@ -1,9 +1,17 @@
 <?php
 /**
- * Comments and pingbacks template.
+ * Comments and pingbacks template with password-protected content checks.
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+if ( post_password_required() ) {
+	return;
+}
 ?>
 <div id="comments">
 	<?php

@@ -7,6 +7,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Returns the internal LechFolio developer documentation URL.
  *
@@ -58,10 +63,10 @@ function lechfolio_print_themes_screen_docs_link() {
 	?>
 	<script>
 	(function () {
-		var docsUrl = <?php echo wp_json_encode( esc_url_raw( $documentation_url ) ); ?>;
-		var docsLabel = <?php echo wp_json_encode( __( 'Documentation', 'lechfolio' ) ); ?>;
-		var stylesheet = <?php echo wp_json_encode( $stylesheet ); ?>;
-		var themeName = <?php echo wp_json_encode( $theme_name ); ?>;
+		var docsUrl = <?php echo wp_json_encode( esc_url_raw( $documentation_url ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
+		var docsLabel = <?php echo wp_json_encode( __( 'Documentation', 'lechfolio' ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
+		var stylesheet = <?php echo wp_json_encode( $stylesheet, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
+		var themeName = <?php echo wp_json_encode( $theme_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
 
 		function buildLink(className) {
 			var link = document.createElement('a');
@@ -80,7 +85,9 @@ function lechfolio_print_themes_screen_docs_link() {
 		}
 
 		function addLinkToThemeCard() {
-			var theme = document.querySelector('.theme.active[data-slug="' + stylesheet + '"]') || document.querySelector('.theme.active');
+			var theme = Array.from(document.querySelectorAll('.theme.active')).find(function (card) {
+				return card.getAttribute('data-slug') === stylesheet;
+			}) || document.querySelector('.theme.active');
 			var actions = theme ? theme.querySelector('.theme-actions') : null;
 
 			if (actions && !hasDocsLink(actions)) {

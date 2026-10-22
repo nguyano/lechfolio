@@ -5,6 +5,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( is_active_sidebar( 'primary-widget-area' ) ) :
 	?>
 	<aside id="sidebar" role="complementary">

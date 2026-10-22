@@ -7,6 +7,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! defined( 'LECHFOLIO_VERSION' ) ) {
 	define( 'LECHFOLIO_VERSION', '1.0.0' );
 }

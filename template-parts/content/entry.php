@@ -5,6 +5,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $heading_tag = is_singular() ? 'h1' : 'h2';
 $entry_part  = ( is_front_page() || is_home() || is_archive() || is_search() ) ? 'summary' : 'content';
 ?>

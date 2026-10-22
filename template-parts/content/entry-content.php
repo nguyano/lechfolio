@@ -1,14 +1,19 @@
 <?php
 /**
- * Full entry content markup.
+ * Full entry content markup with password-aware featured media.
  *
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $thumbnail_id = get_post_thumbnail_id();
 ?>
 <div class="entry-content" itemprop="mainEntityOfPage">
-	<?php if ( has_post_thumbnail() ) : ?>
+	<?php if ( ! post_password_required() && has_post_thumbnail() ) : ?>
 		<a href="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>" title="<?php echo esc_attr( get_the_title( $thumbnail_id ) ); ?>">
 			<?php the_post_thumbnail( 'full', array( 'itemprop' => 'image' ) ); ?>
 		</a>

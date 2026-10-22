@@ -1,15 +1,24 @@
 <?php
 /**
- * Attachment detail template.
+ * Attachment detail template that respects the attachment password gate.
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 get_header();
 
 if ( have_posts() ) :
 	while ( have_posts() ) :
 		the_post();
+		if ( post_password_required() ) {
+			echo get_the_password_form();
+			continue;
+		}
 		$parent_id = wp_get_post_parent_id( get_the_ID() );
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -39,8 +48,7 @@ if ( have_posts() ) :
 
 			<div class="entry-content" itemprop="mainContentOfPage">
 				<div class="entry-attachment">
-					<?php if ( wp_attachment_is_image( get_the_ID() ) ) : ?>
-						<?php $att_image = wp_get_attachment_image_src( get_the_ID(), 'full' ); ?>
+					<?php if ( wp_attachment_is_image( get_the_ID() ) && ( $att_image = wp_get_attachment_image_src( get_the_ID(), 'full' ) ) ) : ?>
 						<p class="attachment">
 							<a href="<?php echo esc_url( wp_get_attachment_url( get_the_ID() ) ); ?>" title="<?php the_title_attribute(); ?>" rel="attachment">
 								<img src="<?php echo esc_url( $att_image[0] ); ?>" width="<?php echo esc_attr( $att_image[1] ); ?>" height="<?php echo esc_attr( $att_image[2] ); ?>" class="attachment-full" alt="<?php echo esc_attr( get_the_excerpt() ); ?>" itemprop="image">

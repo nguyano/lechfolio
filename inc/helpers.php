@@ -8,6 +8,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Checks whether the current user belongs to the Coshelters front-end flow.
  *

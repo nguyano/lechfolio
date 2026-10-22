@@ -1,9 +1,14 @@
 <?php
 /**
- * Comment helpers for LechFolio.
+ * Comment rendering and bounded, post-specific counts for LechFolio.
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Enqueues threaded comment replies when enabled.
@@ -37,21 +42,22 @@ function lechfolio_custom_pings( $comment ) {
  *
  * @since 1.0.0
  *
- * @param int $count Existing comment count.
+ * @param int $count   Existing comment count.
+ * @param int $post_id Post whose comments are being counted.
  * @return int
  */
-function lechfolio_comment_count( $count ) {
-	if ( is_admin() ) {
+function lechfolio_comment_count( $count, $post_id = 0 ) {
+	$post_id = absint( $post_id ?: get_the_ID() );
+	if ( is_admin() || ! $post_id ) {
 		return $count;
 	}
 
-	$get_comments     = get_comments(
+	return (int) get_comments(
 		array(
 			'status'  => 'approve',
-			'post_id' => get_the_ID(),
+			'post_id' => $post_id,
+			'type'    => 'comment',
+			'count'   => true,
 		)
 	);
-	$comments_by_type = separate_comments( $get_comments );
-
-	return isset( $comments_by_type['comment'] ) ? count( $comments_by_type['comment'] ) : 0;
 }

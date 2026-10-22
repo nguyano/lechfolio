@@ -7,6 +7,11 @@
  * @package LechFolio
  */
 
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $lechfolio_includes = array(
 	'inc/constants.php',
 	'inc/theme-setup.php',

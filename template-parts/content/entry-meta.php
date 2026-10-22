@@ -4,6 +4,11 @@
  *
  * @package LechFolio
  */
+
+// Theme files must only run inside WordPress.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <div class="entry-meta">
 	<span class="author vcard"<?php echo is_single() ? ' itemprop="author" itemscope itemtype="https://schema.org/Person"' : ''; ?>>
