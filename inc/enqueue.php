@@ -28,6 +28,54 @@ function lechfolio_asset_version( $relative_path ) {
 }
 
 /**
+ * Google Fonts request for the theme typeface (Jost, plus the Instrument Serif
+ * italic accent the Coshelters screens use) so one shared stylesheet serves
+ * every frontend page.
+ *
+ * @since 1.0.4
+ *
+ * @return string
+ */
+function lechfolio_fonts_url() {
+	return 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Instrument+Serif:ital@1&display=swap';
+}
+
+/**
+ * Loads the theme typeface on every frontend page.
+ *
+ * Runs early so plugins enqueueing later can reuse the `lechfolio-fonts`
+ * handle instead of requesting the same stylesheet again.
+ *
+ * @since 1.0.4
+ *
+ * @return void
+ */
+function lechfolio_enqueue_fonts() {
+	wp_enqueue_style( 'lechfolio-fonts', lechfolio_fonts_url(), array(), null );
+}
+
+/**
+ * Opens connections to Google Fonts early so text renders in Jost sooner.
+ *
+ * @since 1.0.4
+ *
+ * @param array  $urls          URLs to print for resource hints.
+ * @param string $relation_type The relation type the URLs are printed for.
+ * @return array
+ */
+function lechfolio_font_resource_hints( $urls, $relation_type ) {
+	if ( 'preconnect' === $relation_type && wp_style_is( 'lechfolio-fonts', 'enqueued' ) ) {
+		$urls[] = 'https://fonts.googleapis.com';
+		$urls[] = array(
+			'href'        => 'https://fonts.gstatic.com',
+			'crossorigin' => 'anonymous',
+		);
+	}
+
+	return $urls;
+}
+
+/**
  * Enqueues the theme stylesheet and public interaction script.
  *
  * @since 1.0.0
@@ -35,7 +83,7 @@ function lechfolio_asset_version( $relative_path ) {
  * @return void
  */
 function lechfolio_enqueue() {
-	wp_enqueue_style( 'lechfolio-style', get_stylesheet_uri(), array(), lechfolio_asset_version( 'style.css' ) );
+	wp_enqueue_style( 'lechfolio-style', get_stylesheet_uri(), array( 'lechfolio-fonts' ), lechfolio_asset_version( 'style.css' ) );
 	wp_enqueue_script( 'lechfolio-public', LECHFOLIO_URI . '/assets/js/public-scripts.js', array(), lechfolio_asset_version( 'assets/js/public-scripts.js' ), true );
 }
 

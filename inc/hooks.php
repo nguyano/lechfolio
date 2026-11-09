@@ -15,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'after_setup_theme', 'lechfolio_setup' );
 add_action( 'admin_init', 'lechfolio_notice_dismissed' );
+add_action( 'wp_enqueue_scripts', 'lechfolio_enqueue_fonts', 5 );
 add_action( 'wp_enqueue_scripts', 'lechfolio_enqueue', 30 );
+add_filter( 'wp_resource_hints', 'lechfolio_font_resource_hints', 10, 2 );
 add_action( 'wp_footer', 'lechfolio_footer_device_classes' );
 add_action( 'widgets_init', 'lechfolio_widgets_init' );
 add_action( 'wp_head', 'lechfolio_pingback_header' );

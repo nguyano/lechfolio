@@ -3,12 +3,92 @@
  *
  * Handles the loader, accessible nested navigation, and plugin dialog triggers.
  */
-window.addEventListener('load', function () {
-    const loader = document.getElementById('lechfolio-loader');
-    if (loader) {
-      loader.classList.add('hide');
-    }
-});
+/*
+ * Page loader: leaves once the page is usable (DOM ready plus a short grace
+ * for the first paint, or the load event, whichever comes first, capped so
+ * heavy embeds never hold it), and returns softly on same-site navigation.
+ */
+(function () {
+	const loader = document.getElementById('lechfolio-loader');
+	if (!loader) {
+		return;
+	}
+
+	// Scripts are running: the CSS no-JS failsafe would otherwise pin it hidden later.
+	loader.style.animation = 'none';
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	let hidden = false;
+	let leaveTimer = null;
+
+	function hide() {
+		if (hidden) {
+			return;
+		}
+		hidden = true;
+		window.clearTimeout(leaveTimer);
+		loader.classList.remove('is-leaving');
+		loader.classList.add('hide');
+		loader.setAttribute('aria-hidden', 'true');
+	}
+
+	function show() {
+		hidden = false;
+		loader.removeAttribute('aria-hidden');
+		loader.classList.remove('hide');
+		loader.classList.add('is-leaving');
+		// A navigation that turns into a download or is cancelled never unloads the page.
+		leaveTimer = window.setTimeout(hide, 8000);
+	}
+
+	const ready = () => window.setTimeout(hide, reduceMotion ? 0 : 280);
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', ready, { once: true });
+	} else {
+		ready();
+	}
+	window.addEventListener('load', hide, { once: true });
+	window.setTimeout(hide, 4000);
+
+	// Back/forward cache restores the page as it was left: never with the loader up.
+	window.addEventListener('pageshow', function (event) {
+		if (event.persisted) {
+			hidden = false;
+			hide();
+		}
+	});
+
+	/** Whether a click on this link leaves for another same-site page in this tab. */
+	function isPageNavigation(event, link) {
+		if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+			return false;
+		}
+		if (link.target && link.target !== '_self') {
+			return false;
+		}
+		if (link.hasAttribute('download') || link.getAttribute('role') === 'button' || link.closest('[data-no-loader]')) {
+			return false;
+		}
+		const url = new URL(link.href, window.location.href);
+		if (url.origin !== window.location.origin || !/^https?:$/.test(url.protocol)) {
+			return false;
+		}
+		if (url.pathname === window.location.pathname && url.search === window.location.search) {
+			return false; // hash jumps and same-page links
+		}
+		return !/\/wp-admin\/|wp-login\.php|action=logout|\.(pdf|zip|csv|xlsx?|docx?|png|jpe?g|webp)$/i.test(url.href);
+	}
+
+	// Bubble phase: page scripts that cancel the click (dialogs, tabs) run first.
+	document.addEventListener('click', function (event) {
+		const link = event.target.closest ? event.target.closest('a[href]') : null;
+		if (!link || !isPageNavigation(event, link)) {
+			return;
+		}
+		// Short delay so instant responses never flash the overlay.
+		window.clearTimeout(leaveTimer);
+		leaveTimer = window.setTimeout(show, 140);
+	});
+})();
 
 const lechfolioToggle = document.getElementById('lechfolio-menu-toggle');
 const lechfolioMenu = document.getElementById('lechfolio-main-menu');

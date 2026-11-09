@@ -1,6 +1,6 @@
 <?php
 /**
- * Site footer with grouped copyright, developer credit, and navigation rows.
+ * Site footer with a single copyright line and the information page links.
  *
  * @package LechFolio
  */
@@ -14,21 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="lechfolio-footer-inner">
 		<p class="lechfolio-footer-copy">
 			<span class="lechfolio-footer-copyright">
-				<span class="lechfolio-coshlt-icon"><?php echo lechfolio_coshlt_icon( 20 ); ?></span>
 				&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?>
 				<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
-				<?php esc_html_e( ' | All rights reserved |', 'lechfolio' ); ?>
+				<span aria-hidden="true">&middot;</span>
+				<?php esc_html_e( 'All rights reserved', 'lechfolio' ); ?>
+				<span aria-hidden="true">&middot;</span>
 			</span>
 			<span class="lechfolio-footer-credit">
 				<?php esc_html_e( 'Developed by', 'lechfolio' ); ?>
 				<a href="https://ngunyiyannick.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ngunyi Yannick L.', 'lechfolio' ); ?></a>
 			</span>
-			<span class="lechfolio-footer-links">
-				<a href="<?php echo esc_url( home_url( '/about' ) ); ?>"><?php esc_html_e( 'About', 'lechfolio' ); ?></a> /
-				<a href="<?php echo esc_url( home_url( '/faqs' ) ); ?>"><?php esc_html_e( 'FAQs', 'lechfolio' ); ?></a> /
-				<a href="<?php echo esc_url( home_url( '/contributors' ) ); ?>"><?php esc_html_e( 'Contributors', 'lechfolio' ); ?></a> / 
-				<a href="<?php echo esc_url( home_url( '/contact-us' ) ); ?>"><?php esc_html_e( 'Contact', 'lechfolio' ); ?></a> 
-			</span>
 		</p>
+		<nav class="lechfolio-footer-links" aria-label="<?php esc_attr_e( 'Footer', 'lechfolio' ); ?>">
+			<a href="<?php echo esc_url( home_url( '/about' ) ); ?>"><?php esc_html_e( 'About', 'lechfolio' ); ?></a>
+			<a href="<?php echo esc_url( home_url( '/faqs' ) ); ?>"><?php esc_html_e( 'FAQs', 'lechfolio' ); ?></a>
+			<a href="<?php echo esc_url( home_url( '/contributors' ) ); ?>"><?php esc_html_e( 'Contributors', 'lechfolio' ); ?></a>
+			<a href="<?php echo esc_url( home_url( '/contact-us' ) ); ?>"><?php esc_html_e( 'Contact', 'lechfolio' ); ?></a>
+		</nav>
 	</div>
 </footer>

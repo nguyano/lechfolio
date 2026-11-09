@@ -15,7 +15,8 @@ Text Domain: lechfolio
 LechFolio WordPress Theme 2025
 LechFolio is distributed under the terms of the GNU GPL
 
-Theme presentation, including accessible dropdown navigation and responsive layouts.
+Theme presentation, including accessible navigation and responsive layouts.
+The SheltersConnect shell (header, navigation, footer) follows the Coshelters design tokens.
 */
 
 /* Theme shell
@@ -26,15 +27,6 @@ Theme presentation, including accessible dropdown navigation and responsive layo
   --lechfolio-text: #1f2933;
   --lechfolio-muted: #64748b;
   --lechfolio-footer-bg: #2a3c48;
-}
-
-@font-face {
-  font-family: "Font Awesome 6 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url("lib/fontawesome/webfonts/fa-solid-900.woff2") format("woff2"),
-    url("lib/fontawesome/webfonts/fa-solid-900.ttf") format("truetype");
 }
 
 * {
@@ -159,13 +151,25 @@ img {
 
 
 /*LechFolio Loader*/
+/* Leaves with a soft fade; returns quickly on navigation (is-leaving). The
+ * figure is the theme spinner unless a plugin supplies one (--custom). */
 #lechfolio-loader {
-  transition: opacity 0.5s ease;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .45s cubic-bezier(.4, 0, .2, 1), visibility 0s linear 0s;
 }
 #lechfolio-loader.hide {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.4, 0, .2, 1), visibility 0s linear .45s;
 }
+#lechfolio-loader.is-leaving { transition-duration: .22s; }
+#lechfolio-loader > :not(.screen-reader-text) { transition: transform .45s cubic-bezier(.4, 0, .2, 1); }
+#lechfolio-loader.hide > :not(.screen-reader-text) { transform: scale(.94); }
+/* No-JS / failed-script safety: never leave the page covered. */
+#lechfolio-loader { animation: lechfolio-loader-failsafe 0s linear 10s forwards; }
+@keyframes lechfolio-loader-failsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 
 .lechfolio-loader-overlay {
   display: flex;
@@ -175,7 +179,7 @@ img {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  z-index: 1050;
+  z-index: 100003;
   top: 0;
   left: 0;
 }
@@ -190,6 +194,11 @@ img {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lechfolio-loader,
+  #lechfolio-loader.hide { transition-duration: .01s; }
+  .lechfolio-loader-spinner { animation-duration: 2s; }
 }
 
 
@@ -262,144 +271,6 @@ display: flex;
 	color: var(--lechfolio-accent);
 }
 
-/* Header shortcut buttons
---------------------------------------------- */
-.lechfolio-contact-btn {
-	border: solid 1px #808c8d;
-	border-radius: 30px;
-	padding: 5px 15px !important;
-	margin-top: -5px;
-}
-
-a.lechfolio-home-btn,
-a.lechfolio-about-btn,
-a.lechfolio-faqs-btn,
-a.lechfolio-contact-btn,
-.lechfolio-home-btn > a,
-.lechfolio-about-btn > a,
-.lechfolio-contact-btn > a,
-.lechfolio-faqs-btn > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-a.lechfolio-home-btn::before,
-a.lechfolio-about-btn::before,
-a.lechfolio-faqs-btn::before,
-a.lechfolio-contact-btn::before,
-.lechfolio-home-btn > a::before,
-.lechfolio-about-btn > a::before,
-.lechfolio-faqs-btn > a::before,
-.lechfolio-contact-btn > a::before {
-  display: inline-block;
-  font-family: "Font Awesome 6 Free";
-  font-size: 0.9em;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 1;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-}
-
-a.lechfolio-home-btn::before,
-.lechfolio-home-btn > a::before {
-  content: "\f54f";
-}
-
-a.lechfolio-about-btn::before,
-.lechfolio-about-btn > a::before {
-  content: "\f05a";
-}
-
-a.lechfolio-faqs-btn::before,
-.lechfolio-faqs-btn > a::before {
-  content: "\f059";
-}
-
-a.lechfolio-contact-btn::before,
-.lechfolio-contact-btn > a::before {
-  content: "\f0e0";
-}
-
-.lechfolio-add-shelter-btn{
-  border-radius: 999px;
-  background: rgba(185, 8, 2, 0.08);
-  color: #4a2f55;
-  min-height: 38px;
-  padding: 0.5rem 0.95rem;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
-}
-
-.lechfolio-add-shelter-btn:hover,
-.lechfolio-add-shelter-btn:focus {
-  border-color: rgba(156, 39, 176, 0.38);
-  background: rgba(156, 39, 176, 0.1);
-  color: #351b40;
-  outline: none;
-}
-
-.lechfolio-contact-btn:hover {
-  background-color: #e4e4e4;
-}
-
-.lechfolio-menu-list li.current-menu-item > a,
-.lechfolio-menu-list li.current_page_item > a {
-  font-weight: 700;
-  color: var(--lechfolio-accent);
-  border-bottom: 2px solid var(--lechfolio-accent);
-}
-
-.lechfolio-menu-list li.current-menu-item a.lechfolio-contact-btn,
-.lechfolio-menu-list li.current_page_item a.lechfolio-contact-btn,
-.lechfolio-menu-list li.lechfolio-contact-btn.current-menu-item > a,
-.lechfolio-menu-list li.lechfolio-contact-btn.current_page_item > a {
-  border-bottom: 0;
-}
-
-.lechfolio-menu {
-  display: flex;
-  align-items: center;
-  overflow: visible;
-}
-
-.lechfolio-header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-left: auto;
-  min-width: 0;
-  overflow: visible;
-}
-
-.lechfolio-menu-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 1.5rem;
-  overflow: visible;
-}
-
-.lechfolio-menu-item {}
-
-.lechfolio-menu-link,
-.lechfolio-menu-button {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s ease;
-}
-
-.lechfolio-menu-link:hover,
-.lechfolio-menu-button:hover {
-  color: #0073aa;
-}
-
 /* Font & Typography */
 body,
 .lechfolio-menu-list,
@@ -408,7 +279,7 @@ body,
 .lechfolio-dropdown-toggle,
 .lechfolio-dropdown-menu,
 .lechfolio-dropdown-item {
-  font-family: avenir, jost, tahoma, sans-serif !important;
+  font-family: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif !important;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -445,10 +316,6 @@ body,
 
 .lechfolio-menu-list .menu-item {
 	padding: 0 1rem;
-}
-
-.lechfolio-menu-list .lechfolio-contact-btn {
-	padding: 5px 15px !important;
 }
 
 .lechfolio-menu-link:hover,
@@ -1193,22 +1060,6 @@ body.admin-bar #wrapper {
   outline-offset: 2px;
 }
 
-.lechfolio-menu .lechfolio-menu-list .lechfolio-contact-btn {
-  margin-top: 0;
-  padding: 0 !important;
-  border-radius: 30px;
-}
-
-.lechfolio-menu li.lechfolio-contact-btn > a,
-.lechfolio-menu a.lechfolio-contact-btn {
-  padding: 0.65rem 1rem !important;
-  border-radius: 30px;
-}
-
-.lechfolio-menu li.lechfolio-contact-btn.lechfolio-has-submenu > a {
-  padding-right: 3rem !important;
-}
-
 .lechfolio-menu-toggle {
   align-items: center;
   justify-content: center;
@@ -1225,56 +1076,578 @@ body.admin-bar #wrapper {
   flex-shrink: 0;
 }
 
-@media (max-width: 991px) {
-  .lechfolio-nav-container {
-    gap: 0.75rem;
-  }
 
-  .lechfolio-menu-toggle {
-    display: flex;
-    flex: 0 0 auto;
-    margin: 0;
-  }
+/* ==========================================================================
+ * SheltersConnect shell — header, navigation and footer.
+ * Uses Coshelters design tokens when the plugin is active, with literal
+ * fallbacks so theme-only pages keep the same appearance.
+ * @since 1.0.4
+ * ========================================================================== */
+/* Declared on body too so the aliases re-resolve wherever the dark tokens are set. */
+:root,
+body {
+  --lechfolio-shell-ink: var(--coshlt-ds-ink, #1e1716);
+  --lechfolio-shell-ink-2: var(--coshlt-ds-ink-2, #3a2e2c);
+  --lechfolio-shell-faint: var(--coshlt-ds-faint, #8a7c7a);
+  --lechfolio-shell-surface: var(--coshlt-ds-surface, #fff);
+  --lechfolio-shell-line: var(--coshlt-ds-line, #f0e6e4);
+  --lechfolio-shell-pill-line: #efe4e2;
+  --lechfolio-shell-tint: var(--coshlt-ds-tint, #fbedea);
+  --lechfolio-shell-hover: var(--coshlt-ds-hover, #fbf1ef);
+  --lechfolio-shell-brand: var(--coshlt-ds-brand, #a60900);
+  --lechfolio-shell-badge: var(--coshlt-ds-grad-badge, linear-gradient(135deg, #c41e0e, #7e0700));
+  --lechfolio-shell-footer: var(--coshlt-ds-grad-footer, linear-gradient(110deg, #1e0605 0%, #2e0806 60%, #4a0400 100%));
+  --lechfolio-accent: var(--lechfolio-shell-brand);
+}
+/* Same dark triggers as the Coshelters design tokens, so shell and content switch together. */
+html.coshlt-dark-edition,
+html[data-coshlt-theme="dark"],
+body.coshlt-front-theme-dark {
+  color-scheme: dark;
+  --lechfolio-shell-pill-line: var(--coshlt-ds-line-strong, #3f302d);
+}
 
-  .lechfolio-menu {
-    display: none;
+body {
+  color: var(--lechfolio-shell-ink);
+  background: var(--coshlt-ds-canvas, #fbf8f7);
+}
+
+/* Plugin pages lay out their own bands; the theme column steps aside. */
+body.coshlt-frontend-design #wrapper {
+  overflow-x: clip;
+}
+body.coshlt-frontend-design .lechfolio-site-main,
+body.coshlt-frontend-design .lechfolio-page-card,
+body.coshlt-frontend-design .lechfolio-page-body {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* The page template's pagination slot is empty on plugin pages; drop its gap. */
+body.coshlt-frontend-design .entry-links:not(:has(*)) {
+  display: none;
+}
+
+/* Header ------------------------------------------------------------------ */
+.lechfolio-header {
+  position: relative;
+  z-index: 10000;
+  padding: 0;
+  background: var(--lechfolio-shell-surface);
+  border: 0;
+  border-bottom: 1px solid var(--lechfolio-shell-line);
+  box-shadow: none;
+}
+.lechfolio-header .lechfolio-nav-container {
+  width: 100%;
+  max-width: 1280px;
+  height: 72px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+}
+.lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0;
+  background: none;
+}
+.lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img {
+  display: block;
+  width: auto;
+  height: 30px;
+  max-height: none;
+}
+
+/* Exactly one logo shows: the site logo in light mode, the plugin's light-on-dark logo in dark mode. */
+.lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img.coshlt-dark-mode-logo,
+:is(html.coshlt-dark-edition, html[data-coshlt-theme="dark"]) .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin):has(.coshlt-dark-mode-logo) img:not(.coshlt-dark-mode-logo),
+body.coshlt-front-theme-dark .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin):has(.coshlt-dark-mode-logo) img:not(.coshlt-dark-mode-logo) {
+  display: none;
+}
+:is(html.coshlt-dark-edition, html[data-coshlt-theme="dark"]) .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img.coshlt-dark-mode-logo,
+body.coshlt-front-theme-dark .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img.coshlt-dark-mode-logo {
+  display: block;
+}
+.lechfolio-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.lechfolio-header .lechfolio-menu-toggle {
+  display: none;
+}
+.lechfolio-header .lechfolio-menu {
+  position: static;
+  display: flex;
+  align-items: center;
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.lechfolio-header .lechfolio-menu > .lechfolio-menu-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+.lechfolio-header .lechfolio-menu-list > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Visitor and signed-in links share the 44px pill target. */
+.lechfolio-header .lechfolio-menu .menu-item > a,
+.lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--lechfolio-shell-ink-2);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s ease, background .2s ease;
+}
+.lechfolio-header .lechfolio-menu :is(.coshlt-ds-icon, .lechfolio-visitor-icon) {
+  flex: 0 0 auto;
+  color: var(--lechfolio-shell-brand);
+}
+.lechfolio-header .lechfolio-menu .menu-item > a:hover,
+.lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button):hover {
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-hover);
+}
+.lechfolio-header .lechfolio-menu :is(.current-menu-item, .current_page_item) > a,
+.lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button).active {
+  color: var(--lechfolio-shell-brand);
+  font-weight: 500;
+  background: var(--lechfolio-shell-tint);
+}
+
+
+/* Visitor submenu disclosure (About). */
+.lechfolio-header .lechfolio-menu .lechfolio-has-submenu > a {
+  padding-right: 34px;
+}
+.lechfolio-header .lechfolio-submenu-toggle {
+  top: 6px;
+  right: 4px;
+  width: 30px;
+  height: 32px;
+  border-radius: 9px;
+  color: var(--lechfolio-shell-faint);
+}
+.lechfolio-header .lechfolio-submenu-toggle::after {
+  width: 6px;
+  height: 6px;
+  border-width: 0 1.8px 1.8px 0;
+}
+.lechfolio-header .lechfolio-submenu-toggle:hover,
+.lechfolio-header .lechfolio-submenu-toggle[aria-expanded="true"] {
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-hover);
+}
+.lechfolio-header .lechfolio-menu .sub-menu,
+.lechfolio-header .lechfolio-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  left: auto;
+  width: 240px;
+  min-width: 220px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--lechfolio-shell-surface);
+  border: 1px solid var(--lechfolio-shell-line);
+  border-radius: 14px;
+  box-shadow: 0 24px 48px -30px rgba(80, 10, 0, .45);
+}
+/* Invisible bridge across the 10px offset keeps hover open while moving to the panel. */
+.lechfolio-header .lechfolio-menu .sub-menu::before,
+.lechfolio-header .lechfolio-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+.lechfolio-header .lechfolio-menu .sub-menu .menu-item > a,
+.lechfolio-header .lechfolio-dropdown-item {
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+  padding: 0 12px;
+  gap: 10px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  color: var(--lechfolio-shell-ink);
+  white-space: normal;
+  box-sizing: border-box;
+}
+.lechfolio-header .lechfolio-dropdown-item .coshlt-ds-icon {
+  color: var(--lechfolio-shell-brand);
+}
+.lechfolio-header .lechfolio-dropdown-item:hover {
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-tint);
+}
+.lechfolio-header .lechfolio-dropdown-divider {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--lechfolio-shell-line);
+}
+
+/* Signed-in account controls. */
+.lechfolio-header .lechfolio-menu-divider {
+  width: 1px;
+  height: 26px;
+  margin: 0 8px;
+  background: var(--lechfolio-shell-line);
+}
+.lechfolio-header .lechfolio-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 10px 0 5px;
+  border: 1px solid var(--lechfolio-shell-pill-line);
+  border-radius: 999px;
+  color: var(--lechfolio-shell-ink);
+  background: var(--lechfolio-shell-surface);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.lechfolio-header .lechfolio-dropdown-toggle:hover {
+  color: var(--lechfolio-shell-ink);
+  transform: translateY(-1px);
+}
+.lechfolio-header .lechfolio-avatar {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  object-fit: cover;
+}
+.lechfolio-header .lechfolio-avatar--initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--lechfolio-shell-badge);
+  font-size: 13px;
+  font-weight: 600;
+}
+.lechfolio-header .lechfolio-dropdown-icon {
+  margin: 0;
+  color: var(--lechfolio-shell-faint);
+  font-size: 13px;
+}
+
+/* Plugin-provided header controls. */
+.lechfolio-header .coshlt-header-signin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  margin-left: 24px;
+  padding: 0 18px 0 15px;
+  border: 1px solid #e6d5d2;
+  border-radius: 999px;
+  color: var(--lechfolio-shell-brand);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .2s ease, background .2s ease;
+}
+.lechfolio-header .coshlt-header-signin:hover {
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-hover);
+  transform: translateY(-1px);
+}
+/* Single-job pages (signed update link): logo plus a lock badge, no navigation. */
+body.coshlt-token-page .lechfolio-header :is(.lechfolio-menu, .lechfolio-menu-toggle, .coshlt-theme-mode-toggle) { display: none; }
+.lechfolio-header .coshlt-header-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #166534;
+  background: #e9f5ee;
+}
+:is(html.coshlt-dark-edition, html[data-coshlt-theme="dark"]) .lechfolio-header .coshlt-header-lock { color: #86efac; background: #12301f; }
+@media (max-width: 640px) {
+  .lechfolio-header .coshlt-header-lock { width: 36px; padding: 0; justify-content: center; }
+  .lechfolio-header .coshlt-header-lock__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+.lechfolio-header .coshlt-theme-mode-toggle {
+  /* Fixed basis keeps a true circle; flex would otherwise squeeze the width. */
+  flex: 0 0 44px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  margin: 0 0 0 6px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--lechfolio-shell-pill-line);
+  border-radius: 999px;
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-surface);
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.lechfolio-header .coshlt-theme-mode-toggle:hover {
+  transform: translateY(-1px);
+}
+/* Moon offers dark mode from light; sun offers light mode from dark. */
+.lechfolio-header .coshlt-theme-mode-toggle__icon--sun,
+:is(html.coshlt-dark-edition, html[data-coshlt-theme="dark"]) .lechfolio-header .coshlt-theme-mode-toggle__icon--moon,
+body.coshlt-front-theme-dark .lechfolio-header .coshlt-theme-mode-toggle__icon--moon {
+  display: none;
+}
+:is(html.coshlt-dark-edition, html[data-coshlt-theme="dark"]) .lechfolio-header .coshlt-theme-mode-toggle__icon--sun,
+body.coshlt-front-theme-dark .lechfolio-header .coshlt-theme-mode-toggle__icon--sun {
+  display: block;
+}
+.lechfolio-header .coshlt-theme-mode-toggle__icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lechfolio-header :is(a, button):focus-visible {
+  outline: 2px solid var(--lechfolio-shell-brand);
+  outline-offset: 3px;
+}
+
+/* Visitor links read as text links beside the pill sign-in (landing layout). */
+body:not(.logged-in) .lechfolio-header .lechfolio-menu-list > .menu-item:not(.current-menu-item) > a:hover {
+  background: transparent;
+}
+
+/* Submenu rows share the account dropdown hover treatment. */
+.lechfolio-header .lechfolio-menu .sub-menu .menu-item > a:hover,
+.lechfolio-header .lechfolio-menu .sub-menu .menu-item > a:focus-visible {
+  color: var(--lechfolio-shell-brand);
+  background: var(--lechfolio-shell-tint);
+}
+
+/* Footer ------------------------------------------------------------------ */
+.lechfolio-footer {
+  margin-top: auto;
+  padding: 0;
+  color: #e9d9d6;
+  background: var(--lechfolio-shell-footer);
+  border: 0;
+}
+.lechfolio-footer-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  text-align: left;
+  box-sizing: border-box;
+}
+.lechfolio-footer-copy {
+  display: block;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.lechfolio-footer-credit {
+  margin: 0;
+}
+.lechfolio-footer .lechfolio-footer-inner a {
+  color: #e9d9d6;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.lechfolio-footer .lechfolio-footer-inner a:hover {
+  color: #fff;
+}
+.lechfolio-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 0;
+}
+.lechfolio-footer-links a {
+  font-size: 14px;
+  font-weight: 500;
+}
+.lechfolio-footer a:focus-visible {
+  outline: 2px solid #ffd9d2;
+  outline-offset: 3px;
+}
+
+/* Narrow layouts collapse navigation labels to icon-only targets. */
+@media (max-width: 1100px) {
+  body.logged-in .lechfolio-header .lechfolio-nav-txt {
     position: absolute;
-    top: 100%;
-    left: 1rem;
-    right: 1rem;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  body.logged-in .lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button) {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+@media (max-width: 640px) {
+  .lechfolio-header .lechfolio-nav-container {
+    height: 64px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img {
+    height: 26px;
+  }
+  .lechfolio-header .lechfolio-menu > .lechfolio-menu-list {
+    gap: 2px;
+  }
+  .lechfolio-header .lechfolio-nav-txt {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .lechfolio-header .lechfolio-menu .menu-item > a {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .lechfolio-header .lechfolio-menu .lechfolio-has-submenu > a {
     width: auto;
-    max-height: 70vh;
-    max-height: 70dvh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 0.75rem;
-    background: #fff;
-    border: 1px solid var(--lechfolio-border);
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+    padding: 0 30px 0 13px;
   }
-
-  .lechfolio-menu.lechfolio-active {
-    display: block;
+  .lechfolio-header .lechfolio-menu .sub-menu .menu-item > a {
+    width: 100%;
+    padding: 0 12px;
+    justify-content: flex-start;
   }
-
-  .lechfolio-menu > .lechfolio-menu-list {
+  body:not(.logged-in) .lechfolio-header .lechfolio-menu-list > .menu-item > a:hover {
+    background: var(--lechfolio-shell-tint);
+  }
+  .lechfolio-header .lechfolio-menu-divider {
+    margin: 0 4px;
+  }
+  .lechfolio-header .lechfolio-user-name {
+    display: none;
+  }
+  .lechfolio-header .coshlt-header-signin {
+    margin-left: 6px;
+    padding: 0 14px;
+  }
+  .lechfolio-footer-inner {
     flex-direction: column;
-    align-items: stretch;
-    gap: 0.25rem;
+    align-items: flex-start;
+    padding: 24px 16px;
   }
-
-  .lechfolio-menu .sub-menu,
-  .lechfolio-menu .lechfolio-dropdown-menu {
-    position: static;
-    width: auto;
-    min-width: 0;
-    max-width: none;
-    margin: 0.25rem 0 0.5rem 0.75rem;
-    padding: 0 0 0 0.5rem;
-    border: 0;
-    border-left: 2px solid var(--lechfolio-border);
-    border-radius: 0;
-    box-shadow: none;
+}
+/* Signed-in header on small phones: compact targets so nav, account and mode controls fit. */
+@media (max-width: 480px) {
+  .lechfolio-header .lechfolio-nav-container { gap: 8px; }
+  .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img { height: 22px; }
+  .lechfolio-header .lechfolio-menu > .lechfolio-menu-list { gap: 0; }
+  body.logged-in .lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button) {
+    width: 38px;
+    height: 40px;
+    min-height: 40px;
+  }
+  .lechfolio-header .lechfolio-menu-divider { display: none; }
+  .lechfolio-header .lechfolio-dropdown-toggle {
+    height: 40px;
+    padding: 0 3px;
+    gap: 0;
+  }
+  .lechfolio-header .lechfolio-dropdown-toggle .lechfolio-dropdown-icon { display: none; }
+  .lechfolio-header .coshlt-theme-mode-toggle {
+    flex-basis: 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    margin-left: 4px;
+  }
+}
+/* Visitor header on small phones: nav icons, Sign in and the mode toggle share one row. */
+@media (max-width: 480px) {
+  body:not(.logged-in) .lechfolio-header .lechfolio-menu .menu-item > a { width: 36px; height: 40px; }
+  body:not(.logged-in) .lechfolio-header .lechfolio-menu .lechfolio-has-submenu > a { width: auto; padding: 0 20px 0 9px; }
+  body:not(.logged-in) .lechfolio-header .lechfolio-menu .sub-menu .menu-item > a { width: 100%; height: auto; }
+  body:not(.logged-in) .lechfolio-header .coshlt-header-signin { height: 40px; margin-left: 2px; }
+}
+@media (max-width: 380px) {
+  .lechfolio-header .lechfolio-nav-container { padding: 0 12px; gap: 6px; }
+  body:not(.logged-in) .lechfolio-header .lechfolio-menu .menu-item > a { width: 32px; }
+  .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img { height: 20px; }
+  body.logged-in .lechfolio-header :is(.lechfolio-menu-link, .lechfolio-menu-button) { width: 32px; }
+}
+@media (max-width: 480px) {
+  .lechfolio-header .coshlt-header-signin__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .lechfolio-header .coshlt-header-signin {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lechfolio-header :is(a, button),
+  .lechfolio-footer a {
+    transition: none;
   }
 }
