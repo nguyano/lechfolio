@@ -1594,6 +1594,23 @@ body:not(.logged-in) .lechfolio-header .lechfolio-menu-list > .menu-item:not(.cu
     padding: 24px 16px;
   }
 }
+/* Phones: the stacked copyright, credit and links sit centred. */
+@media (max-width: 768px) {
+  .lechfolio-footer-inner {
+    align-items: center;
+    text-align: center;
+  }
+  .lechfolio-footer-links {
+    justify-content: center;
+  }
+  /* The developer credit takes its own line, so the separator before it goes. */
+  .lechfolio-footer-credit {
+    display: block;
+  }
+  .lechfolio-footer-copyright > span[aria-hidden="true"]:last-child {
+    display: none;
+  }
+}
 /* Signed-in header on small phones: compact targets so nav, account and mode controls fit. */
 @media (max-width: 480px) {
   .lechfolio-header .lechfolio-nav-container { gap: 8px; }
