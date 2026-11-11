@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$logo_class = is_user_logged_in() && lechfolio_is_frontend_request() ? 'lechfolio-logo' : 'lechfolio-logo-loggedin';
+$logo_class = lechfolio_shows_signed_in_menu() ?'lechfolio-logo' : 'lechfolio-logo-loggedin';
 // Coshelters pages replace the dropdown with a drawer that floats in from the left.
 $has_drawer = (bool) apply_filters( 'coshlt_theme_mobile_drawer', false );
 ?>

@@ -221,6 +221,22 @@ function lechfolio_frontend_menu_icon( $title, $item, $args, $depth ) {
 }
 
 /**
+ * Whether the header shows the signed-in menu instead of the visitor menu.
+ *
+ * Plugins can keep the visitor menu on pages such as a password reset page
+ * through the `lechfolio_show_signed_in_menu` filter.
+ *
+ * @since 1.0.0
+ *
+ * @return bool
+ */
+function lechfolio_shows_signed_in_menu() {
+	$signed_in = is_user_logged_in() && lechfolio_is_frontend_request();
+
+	return (bool) apply_filters( 'lechfolio_show_signed_in_menu', $signed_in );
+}
+
+/**
  * Prints the existing menu with scoped decorative frontend visitor icons.
  *
  * @since 1.0.0
@@ -228,7 +244,7 @@ function lechfolio_frontend_menu_icon( $title, $item, $args, $depth ) {
  * @return void
  */
 function lechfolio_primary_menu() {
-	if ( is_user_logged_in() && lechfolio_is_frontend_request() && function_exists( 'lechfolio_loged_in_menu' ) ) {
+	if ( lechfolio_shows_signed_in_menu() && function_exists( 'lechfolio_loged_in_menu' ) ) {
 		// The menu template escapes each dynamic value before buffering markup.
 		echo lechfolio_loged_in_menu();
 		return;
