@@ -95,7 +95,6 @@ const lechfolioMenu = document.getElementById('lechfolio-main-menu');
 
 if (lechfolioToggle && lechfolioMenu) {
 	const mobile = window.matchMedia('(max-width: 991px)');
-	const dropdowns = [];
 
 	/** Closes a branch and resets every nested disclosure. */
 	function closeBranch(item) {
@@ -104,13 +103,6 @@ if (lechfolioToggle && lechfolioMenu) {
 			button.setAttribute('aria-expanded', 'false');
 			button.parentElement.classList.remove('lechfolio-submenu-open');
 		});
-	}
-
-	/** Keeps mobile visibility and its announced state in sync. */
-	function closeMenu() {
-		lechfolioMenu.classList.remove('lechfolio-active');
-		lechfolioToggle.setAttribute('aria-expanded', 'false');
-		dropdowns.forEach(closeBranch);
 	}
 
 	lechfolioMenu.querySelectorAll('.sub-menu').forEach((submenu, index) => {
@@ -126,7 +118,6 @@ if (lechfolioToggle && lechfolioMenu) {
 		button.setAttribute('aria-label', `${lechfolioMenu.dataset.submenuLabel || 'Submenu for'} ${link.textContent.trim()}`);
 		item.classList.add('lechfolio-has-submenu');
 		link.after(button);
-		dropdowns.push(item);
 
 		/** Opens this branch while closing sibling branches. */
 		function openBranch() {
@@ -160,6 +151,21 @@ if (lechfolioToggle && lechfolioMenu) {
 		});
 	});
 	lechfolioMenu.classList.add('lechfolio-menu-enhanced');
+}
+
+// The Coshelters drawer owns the hamburger when present (data-coshlt-m-menu-open).
+if (lechfolioToggle && lechfolioMenu && !lechfolioToggle.hasAttribute('data-coshlt-m-menu-open')) {
+	const mobile = window.matchMedia('(max-width: 991px)');
+
+	/** Keeps mobile visibility and its announced state in sync. */
+	function closeMenu() {
+		lechfolioMenu.classList.remove('lechfolio-active');
+		lechfolioToggle.setAttribute('aria-expanded', 'false');
+		lechfolioMenu.querySelectorAll('.lechfolio-has-submenu').forEach(item => {
+			item.classList.remove('lechfolio-submenu-open');
+			item.querySelector(':scope > .lechfolio-submenu-toggle')?.setAttribute('aria-expanded', 'false');
+		});
+	}
 
 	lechfolioToggle.addEventListener('click', () => {
 		const expanded = lechfolioToggle.getAttribute('aria-expanded') === 'true';

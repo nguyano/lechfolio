@@ -1652,3 +1652,66 @@ body:not(.logged-in) .lechfolio-header .lechfolio-menu-list > .menu-item:not(.cu
     transition: none;
   }
 }
+
+/* Mobile drawer header (Redesign/mobile-menu) ------------------------------
+ * Below 1000px Coshelters pages show logo left, then (signed in) the avatar and
+ * the hamburger. The drawer itself is plugin markup and CSS (mobile-menu.css).
+ */
+.lechfolio-header .coshlt-header-avatar {
+  display: none;
+}
+@media (max-width: 999px) {
+  body.coshlt-has-m-menu .lechfolio-header .lechfolio-nav-container {
+    height: 64px;
+    padding: 0 16px;
+  }
+  body.coshlt-has-m-menu .lechfolio-header :is(.lechfolio-logo, .lechfolio-logo-loggedin) img {
+    height: 26px;
+  }
+  body.coshlt-has-m-menu .lechfolio-header-actions {
+    gap: 10px;
+  }
+  body.coshlt-has-m-menu .lechfolio-header :is(.lechfolio-menu, .coshlt-header-signin, .coshlt-theme-mode-toggle) {
+    display: none;
+  }
+  body.coshlt-has-m-menu .lechfolio-header .lechfolio-menu-toggle--drawer {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--coshlt-ds-line-strong, #eadfdd);
+    border-radius: 14px;
+    color: var(--lechfolio-shell-ink);
+    background: var(--lechfolio-shell-surface);
+    cursor: pointer;
+  }
+  body.coshlt-has-m-menu .lechfolio-header .lechfolio-menu-toggle--drawer:hover {
+    background: var(--lechfolio-shell-hover);
+  }
+  body.coshlt-has-m-menu .lechfolio-header .coshlt-header-avatar {
+    display: inline-flex;
+    flex: 0 0 auto;
+    border-radius: 50%;
+  }
+  body.coshlt-has-m-menu .lechfolio-header .coshlt-header-avatar__img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 0 2px var(--lechfolio-shell-tint, #fbedea);
+  }
+  body.coshlt-has-m-menu .lechfolio-header .coshlt-header-avatar__img--initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--lechfolio-shell-badge);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
