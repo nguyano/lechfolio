@@ -1,9 +1,9 @@
 /*
 Theme Name: LechFolio
-Theme URI: https://lechtech.net/lechfolio
+Theme URI: https://sheltersconnectcolorado.com/docs/lechfolio
 Author: Ngunyi Yannick
 Author URI: https://ngunyiyannick.com
-Description: LechFolio is a simple yet next-generation multi-purpose WordPress theme. It is perfect for a blog, portfolio website, as well as any type of corporate, finance and agency website. Learn about more ways to use LechFolio at: https://lechtech.net/lechfolio.
+Description: LechFolio is the lightweight container WordPress theme for Shelters Connect Colorado. It provides the site shell, shared header/footer, WordPress content templates, and optional Coshelters plugin frontend navigation adapters.
 Tags: accessibility-ready, one-column, two-columns, custom-menu, featured-images, microformats, sticky-post, threaded-comments, translation-ready
 Version: 1.00
 Requires at least: 6.6
@@ -1041,6 +1041,7 @@ body.admin-bar #wrapper {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg) translateY(-2px);
+  margin-left: 8px;
 }
 
 .lechfolio-submenu-toggle[aria-expanded="true"]::after {
